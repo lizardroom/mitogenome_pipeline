@@ -6,6 +6,8 @@
 - SRA toolkit (optional)
 - Python
 - perl?
+- FastQC
+- Trimmomatic
 - Samtools
 - BWA
 - Stampy
