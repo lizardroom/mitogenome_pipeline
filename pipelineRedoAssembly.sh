@@ -107,28 +107,28 @@ samtools view -b -@ 9 -F 12 ${genomes}/${species}/redo/${species}_stampy_aligned
 echo "done 3"
 
 echo "samtools merge 3 mappings plus mappings together"
-samtools merge ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_mapped.bam \
+samtools merge ${genomes}/${species}/redo/${species}_mapped-${ref}.bam \
 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map1.bam \
 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map2.bam \
 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map3.bam
 
 echo "samtools sort reads in name order"
-samtools sort -n ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_mapped.bam \
--o ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_mapped_ordered.bam
+samtools sort -n ${genomes}/${species}/redo/${species}_mapped-${ref}.bam \
+-o ${genomes}/${species}/redo/${species}_mapped-${ref}_ordered.bam
 
 echo ""
 echo "##################### depth and breadth stats on filtered reads"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_stampy_aligned-${ref}_mapped" "/redo"
+/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_mapped-${ref}" "/redo"
 
 echo ""
 echo "##################### any other prep pre-assembly"
 echo "bedtools into fastq r1 and r2 - for NOVOplasty"
-bamToFastq -i ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_mapped_ordered.bam \
--fq ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_mapped_r1.fq \
--fq2 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_mapped_r2.fq
+bamToFastq -i ${genomes}/${species}/redo/${species}_mapped-${ref}_ordered.bam \
+-fq ${genomes}/${species}/redo/${species}_mapped-${ref}_r1.fq \
+-fq2 ${genomes}/${species}/redo/${species}_mapped-${ref}_r2.fq
 
 echo "##################### create config file for NOVOplasty"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_stampy_aligned-${ref}_mapped_r" "redo/" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "redo"
+/projectsc/f_geneva_1/caden/mtGenomes/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_mapped-${ref}_r" "redo/" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "redo"
 
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
