@@ -17,7 +17,7 @@ conTemp="/projectsc/f_geneva_1/caden/mtGenomes/univ_configuration_novo.txt"
 conNew="${output}novo_config_${species}_${format}_${refName}_${Kmer}.txt"
 
 echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
-echo "${species}_${9}_${6}_${8}" >> ${conNew}
+echo "${species}_${format}_${refName}_${Kmer}" >> ${conNew}
 echo -n "$(sed -n '4,6p' ${conTemp})" >> ${conNew}
 echo "${Kmer}" >> ${conNew}
 echo -n "$(sed -n '7,10p' ${conTemp})" >> ${conNew}
