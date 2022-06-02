@@ -30,7 +30,7 @@ species="$1"
 ref="$2"
 Kmer="$3"
 fetchDir="/projectsc/f_geneva_1/caden/mtGenomes/species-fetch"
-folder="/projectsc/f_geneva_1/$(sed -n '1p' ${fetchDir}/${1}.txt)"
+folder="$(sed -n '1p' ${fetchDir}/${1}.txt)"
 reads1="$(sed -n '2p' ${fetchDir}/${1}.txt)"
 reads2="$(sed -n '3p' ${fetchDir}/${1}.txt)"
 readlen="$(sed -n '4p' ${fetchDir}/${1}.txt)"
@@ -71,74 +71,69 @@ echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### index and align with BWA"
-#bwa index ${genomes}/sagrei/AnoSag2_mtDNA_consensus.fasta
+#bwa index ${genomes}/deca_align/${ref}.fasta
 
-bwa mem -t 10 ${genomes}/sagrei/AnoSag2_mtDNA_consensus.fasta \
+bwa mem -t 10 ${genomes}/deca_align/${ref}.fasta \
 ${genomes}/${species}/${species}_filtered.R1.fq.gz \
 ${genomes}/${species}/${species}_filtered.R2.fq.gz \
-| samtools sort -@10 -o ${genomes}/${species}/${species}_bwa_aligned.bam -
+| samtools sort -@10 -o ${genomes}/${species}/${species}_bwa_aligned-${ref}.bam -
 
 echo ""
 echo "##################### depth and breadth stats on BWA"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_bwa_aligned" ""
+/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_bwa_aligned-${ref}" ""
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### stampy re-mapping onto BWA output"
 #echo "build genome file (comment out on re-runs)"
-#/projectsc/f_geneva_1/programs/stampy/stampy.py -G sag2 --inputformat=fasta ${genomes}/sagrei/AnoSag2_mtDNA_consensus.fasta
+#/projectsc/f_geneva_1/programs/stampy/stampy.py -G ${ref} --inputformat=fasta ${genomes}/deca_align/${ref}.fasta
 #echo "build hash table (comment out on re-runs)"
-#/projectsc/f_geneva_1/programs/stampy/stampy.py -g sag2 -H sag2
+#/projectsc/f_geneva_1/programs/stampy/stampy.py -g ${ref} -H ${ref}
 
 echo "map unmapped reads from bwa using stampy"
-/projectsc/f_geneva_1/programs/stampy/stampy.py -g ${genomes}/sagrei/sag2 \
--h ${genomes}/sagrei/sag2 -t 10 --bamkeepgoodreads \
--M ${genomes}/${species}/${species}_bwa_aligned.bam \
-| samtools sort -@10 -o ${genomes}/${species}/${species}_stampy_aligned.bam -
+/projectsc/f_geneva_1/programs/stampy/stampy.py -g ${genomes}/deca_align/${ref} \
+-h ${genomes}/deca_align/${ref} -t 10 --bamkeepgoodreads \
+-M ${genomes}/${species}/${species}_bwa_aligned-${ref}.bam \
+| samtools sort -@10 -o ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam -
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### depth and breadth stats on stampy"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_stampy_aligned" ""
+/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_stampy_aligned-${ref}" ""
 
 echo ""
 echo "##################### filter and sort mapped reads with samtools"
 echo "samtools code sorting different combos of  mapped reads into new bam file"
-samtools view -b -@ 9 -F 4 -f 8 ${genomes}/${species}/${species}_stampy_aligned.bam > ${genomes}/${species}/${species}_stampy_aligned_map1.bam
+samtools view -b -@ 9 -F 4 -f 8 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map1.bam
 echo "done 1"
-samtools view -b -@ 9 -F 8 -f 4 ${genomes}/${species}/${species}_stampy_aligned.bam > ${genomes}/${species}/${species}_stampy_aligned_map2.bam
+samtools view -b -@ 9 -F 8 -f 4 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map2.bam
 echo "done 2"
-samtools view -b -@ 9 -F 12 ${genomes}/${species}/${species}_stampy_aligned.bam > ${genomes}/${species}/${species}_stampy_aligned_map3.bam
+samtools view -b -@ 9 -F 12 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map3.bam
 echo "done 3"
 
 echo "samtools merge 3 mappings together"
-samtools merge ${genomes}/${species}/${species}_stampy_aligned_mapped.bam \
-${genomes}/${species}/${species}_stampy_aligned_map1.bam \
-${genomes}/${species}/${species}_stampy_aligned_map2.bam \
-${genomes}/${species}/${species}_stampy_aligned_map3.bam
+samtools merge ${genomes}/${species}/${species}_mapped-${ref}.bam \
+${genomes}/${species}/${species}_stampy_aligned-${ref}_map1.bam \
+${genomes}/${species}/${species}_stampy_aligned-${ref}_map2.bam \
+${genomes}/${species}/${species}_stampy_aligned-${ref}_map3.bam
 
 echo "samtools sort reads in name order"
-samtools sort -n ${genomes}/${species}/${species}_stampy_aligned_mapped.bam \
--o ${genomes}/${species}/${species}_stampy_aligned_mapped_ordered.bam
+samtools sort -n ${genomes}/${species}/${species}_mapped-${ref}.bam \
+-o ${genomes}/${species}/${species}_mapped-${ref}_ordered.bam
 
 echo ""
 echo "##################### depth and breadth stats on filtered reads"
-/projectsc/f_geneva_1/caden/mtGenomes/sam_depth.sh ${species} "_stampy_aligned_mapped" ""
+/projectsc/f_geneva_1/caden/mtGenomes/sam_depth.sh ${species} "_mapped-${ref}" ""
 
 echo ""
 echo "##################### any other prep pre-assembly"
 echo "bedtools into fastq r1 and r2 - for NOVOplasty"
-bamToFastq -i ${genomes}/${species}/${species}_stampy_aligned_mapped_ordered.bam \
--fq ${genomes}/${species}/${species}_stampy_aligned_mapped_r1.fq \
--fq2 ${genomes}/${species}/${species}_stampy_aligned_mapped_r2.fq
+bamToFastq -i ${genomes}/${species}/${species}_mapped-${ref}_ordered.bam \
+-fq ${genomes}/${species}/${species}_mapped-${ref}_r1.fq \
+-fq2 ${genomes}/${species}/${species}_mapped-${ref}_r2.fq
 
 echo "create config file for NOVOplasty"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_stampy_aligned_mapped_r" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} ""
-
-#echo "samtools make interleaved fq from bam - for MITObim"
-#samtools bam2fq \
-#${genomes}/${species}/${species}_stampy_aligned_mapped_ordered.bam \
-#> ${genomes}/${species}/${species}_stampy_aligned_mapped_interleaved.fastq
+/projectsc/f_geneva_1/caden/mtGenomes/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_mapped-${ref}_r" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} ""
 
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
@@ -146,16 +141,8 @@ echo ""
 echo "##################### assembly step"
 echo "Run novoplasty assemply"
 perl /projectsc/f_geneva_1/programs/novoplasty/NOVOPlasty4.3.1.pl \
--c ${genomes}/${species}/${species}-novoplasty/novo_config_${species}.txt
+-c ${genomes}/${species}/${species}-novoplasty/novo_config_${species}__${ref}_${Kmer}.txt
 
-
-#echo "add mira to path"
-#export PATH="/projectsc/f_geneva_1/programs/mira/bin:$PATH"
-#echo "run MITObim analysis"
-#/projectsc/f_geneva_1/programs/mitobim/MITObim.pl  -start 1 -end 30 --paired \
-#--denovo -sample ${species}_mitobim -ref sagrei \
-#-readpool ${genomes}/${species}/${species}_stampy_aligned_mapped_interleaved.fastq \
-#-quick /projectsc/f_geneva_1/caden/mtGenomes/genomes/sagrei/AnoSag2_mtDNA_consensus.fasta
 
 echo ""
 echo "##################### change user group of files created"
