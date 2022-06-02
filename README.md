@@ -13,12 +13,16 @@
 - Stampy
 - NOVOplasty
 
-## Program Breakdown
-
-### Setup
+## Setup
 
 - input file format
 - 
+
+## Program Breakdowns
+
+### directNOVO.sh
+
+
 
 ### Pipeline
 
