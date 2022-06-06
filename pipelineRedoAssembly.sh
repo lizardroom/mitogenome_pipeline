@@ -128,7 +128,7 @@ bamToFastq -i ${genomes}/${species}/redo/${species}_mapped-${ref}_ordered.bam \
 -fq2 ${genomes}/${species}/redo/${species}_mapped-${ref}_r2.fq
 
 echo "##################### create config file for NOVOplasty"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_mapped-${ref}_r" "redo/" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "redo"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_mapped-${ref}_r" "redo/" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "redo"
 
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 

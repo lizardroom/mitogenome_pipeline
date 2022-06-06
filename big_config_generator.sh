@@ -4,23 +4,26 @@ genomes="/projectsc/f_geneva_1/caden/mtGenomes/genomes"
 species="$1"
 readLen="$2"
 insert="$3"
-reads=$4
-subfolder=$5
-refName=$6
+#reads=$4
+#subfolder=$5
+#refName=$6
 ref="$7"
 Kmer="$8"
-format=$9
-forward="${genomes}/${species}/${subfolder}${reads}1.fq"
-reverse="${genomes}/${species}/${subfolder}${reads}2.fq"
+#format=$9
+#maxmem=$10
+forward="${genomes}/${species}/${5}${4}1.fq"
+reverse="${genomes}/${species}/${5}${4}2.fq"
 output="${genomes}/${species}/${species}-novoplasty/"
 conTemp="/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_configuration_novo.txt"
-conNew="${output}novo_config_${species}_${format}_${refName}_${Kmer}.txt"
+conNew="${output}novo_config_${species}_${9}_${6}_${8}.txt"
 
 echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
-echo "${species}_${format}_${refName}_${Kmer}" >> ${conNew}
+echo "${species}_${9}_${6}_${8}" >> ${conNew}
 echo -n "$(sed -n '4,6p' ${conTemp})" >> ${conNew}
 echo "${Kmer}" >> ${conNew}
-echo -n "$(sed -n '7,10p' ${conTemp})" >> ${conNew}
+echo -n "$(sed -n '7p' ${conTemp})" >> ${conNew}
+echo "${10}" >> ${conNew}
+echo -n "$(sed -n '8,10p' ${conTemp})" >> ${conNew}
 echo "${ref}" >> ${conNew}
 echo -n "$(sed -n '11,12p' ${conTemp})" >> ${conNew}
 echo "${ref}" >> ${conNew}

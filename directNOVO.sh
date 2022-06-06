@@ -44,7 +44,7 @@ echo "##################### BEGINNING OF $1 #####################"
 #gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
 
 echo "##################### create config file for NOVOplasty"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct"
 
 #echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
