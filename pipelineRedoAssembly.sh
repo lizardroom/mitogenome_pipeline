@@ -1,14 +1,14 @@
 #!/bin/bash
 
 
-#SBATCH --partition=cmem   			# which partition to run the job, options are in the Amarel guide
-#SBATCH --exclude=gpuc001,gpuc002    	        # exclude CCIB GPUs
+#SBATCH --partition=p_ccib_1   			# which partition to run the job, options are in the Amarel guide
+#SBATCH --exclude=gpuc001,gpuc002,memc001	# exclude CCIB GPUs
 #SBATCH --job-name=Pipe_redo 			# job name for listing in queue
 #SBATCH --output=/projectsc/f_geneva_1/caden/mtGenomes/slurmout/slurm-%j-%x.out
 #SBATCH --mem=40G				# memory to allocate in Mb
 #SBATCH -n 10 					# number of cores to use
 #SBATCH -N 1 					# number of nodes the cores should be on, 1 means all cores on same node
-#SBATCH --time=4-12:00:00			# maximum run time days-hours:minutes:seconds
+#SBATCH --time=10-00:00:00			# maximum run time days-hours:minutes:seconds
 #SBATCH --no-requeue 				# restart and paused or superseeded jobs
 #SBATCH --mail-user=lcc128@rutgers.edu 		# email address to send status updates
 #SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE 	# email for the following reasons
