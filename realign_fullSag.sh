@@ -3,7 +3,7 @@
 
 #SBATCH --partition=p_ccib_1   			# which partition to run the job, options are in the Amarel guide
 #SBATCH --exclude=gpuc001,gpuc002    	        # exclude CCIB GPUs
-#SBATCH --job-name=Realign_sag 			# job name for listing in queue
+#SBATCH --job-name=Realign_fullSag 			# job name for listing in queue
 #SBATCH --output=/projectsc/f_geneva_1/caden/mtGenomes/slurmout/slurm-%j-%x.out
 #SBATCH --mem=40G				# memory to allocate in Mb
 #SBATCH -n 10 					# number of cores to use
@@ -49,7 +49,7 @@ ${folder}/${reads1} ${folder}/${reads2} \
 
 echo ""
 echo "##################### depth and breadth stats on BWA"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_bwa_remap-sag" "/remap_sag"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "_bwa_remap-sag" "/remap_sag"
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 
@@ -69,7 +69,7 @@ echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### depth and breadth stats on stampy"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_stampy_remap-sag" "/remap_sag"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "_stampy_remap-sag" "/remap_sag"
 
 
 echo ""

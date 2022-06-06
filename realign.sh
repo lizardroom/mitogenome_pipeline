@@ -50,7 +50,7 @@ ${folder}/${reads1} ${folder}/${reads2} \
 
 echo ""
 echo "##################### depth and breadth stats on BWA"
-/projectsc/f_geneva_1/caden/mtGenomes/univ_sam_depth.sh ${species} "_bwa_remap" "/remap"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "_bwa_remap" "/remap"
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""

@@ -37,9 +37,6 @@ echo "##################### BEGINNING OF $1 #####################"
 
 
 #echo "##################### gunzip fq.gz file"
-#gunzip -c ${folder}${reads1} > ${genomes}/${species}/${species}_reads1.fq
-#gunzip -c ${folder}${reads2} > ${genomes}/${species}/${species}_reads2.fq
-
 #gunzip -c ${genomes}/${species}/${species}_filtered.R1.fq.gz > ${genomes}/${species}/${species}_filtered1.fq
 #gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
 
