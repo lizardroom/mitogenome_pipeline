@@ -66,7 +66,7 @@ echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### index and align with BWA"
-bwa index ${genomes}/deca_align/${ref}.fasta
+#bwa index ${genomes}/deca_align/${ref}.fasta
 
 bwa mem -t 10 ${genomes}/deca_align/${ref}.fasta \
 ${genomes}/${species}/${species}_filtered.R1.fq.gz \
@@ -75,7 +75,7 @@ ${genomes}/${species}/${species}_filtered.R2.fq.gz \
 
 echo ""
 echo "##################### depth and breadth stats on BWA"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "_bwa_aligned-${ref}" "/redo"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_sam_depth.sh ${species} "_bwa_aligned-${ref}" "/redo"
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
@@ -94,7 +94,7 @@ echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### depth and breadth stats on stampy"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "_stampy_aligned-${ref}" "/redo"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_sam_depth.sh ${species} "_stampy_aligned-${ref}" "/redo"
 
 echo ""
 echo "##################### filter and sort mapped reads with samtools"
@@ -118,7 +118,7 @@ samtools sort -n ${genomes}/${species}/redo/${species}_mapped-${ref}.bam \
 
 echo ""
 echo "##################### depth and breadth stats on filtered reads"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "_mapped-${ref}" "/redo"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_sam_depth.sh ${species} "_mapped-${ref}" "/redo"
 
 echo ""
 echo "##################### any other prep pre-assembly"
