@@ -21,9 +21,9 @@ module load perl			#needed by both assemblers
 
 echo ""
 echo "##################### variables"
-species="$1"
-ref="$2"
-Kmer="$3"
+species=$1
+ref=$2
+Kmer=$3
 fetchDir="/projectsc/f_geneva_1/caden/mtGenomes/species-fetch"
 folder="$(sed -n '1p' ${fetchDir}/${1}.txt)"
 reads1="$(sed -n '2p' ${fetchDir}/${1}.txt)"
@@ -36,9 +36,9 @@ echo ""
 echo "##################### BEGINNING OF $1 #####################"
 
 
-#echo "##################### gunzip fq.gz file"
-#gunzip -c ${genomes}/${species}/${species}_filtered.R1.fq.gz > ${genomes}/${species}/${species}_filtered1.fq
-#gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
+echo "##################### gunzip fq.gz file"
+gunzip -c ${genomes}/${species}/${species}_filtered.R1.fq.gz > ${genomes}/${species}/${species}_filtered1.fq
+gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
 
 echo "##################### create config file for NOVOplasty"
 /projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct"

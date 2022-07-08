@@ -104,11 +104,11 @@ echo "##################### depth and breadth stats on stampy"
 echo ""
 echo "##################### filter and sort mapped reads with samtools"
 echo "samtools code sorting different combos of  mapped reads into new bam file"
-samtools view -b -@ 9 -F 4 -f 8 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map1.bam
+samtools view -b -@10 -F 4 -f 8 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map1.bam
 echo "done 1"
-samtools view -b -@ 9 -F 8 -f 4 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map2.bam
+samtools view -b -@10 -F 8 -f 4 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map2.bam
 echo "done 2"
-samtools view -b -@ 9 -F 12 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map3.bam
+samtools view -b -@10 -F 12 ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/${species}_stampy_aligned-${ref}_map3.bam
 echo "done 3"
 
 echo "samtools merge 3 mappings together"

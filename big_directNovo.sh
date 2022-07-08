@@ -38,7 +38,7 @@ genomes="/projectsc/f_geneva_1/caden/mtGenomes/genomes"
 #gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
 
 echo "##################### create config file for NOVOplasty"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/big_config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct" "45"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/big_config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct-big" "45"
 
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
@@ -46,7 +46,7 @@ echo ""
 echo "##################### assembly step"
 echo "Run novoplasty assemply"
 perl /projectsc/f_geneva_1/programs/novoplasty/NOVOPlasty4.3.1.pl \
--c ${genomes}/${species}/${species}-novoplasty/novo_config_${species}_direct_${ref}_${Kmer}.txt
+-c ${genomes}/${species}/${species}-novoplasty/novo_config_${species}_direct-big_${ref}_${Kmer}.txt
 
 
 echo ""

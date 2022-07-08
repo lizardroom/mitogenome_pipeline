@@ -5,7 +5,7 @@
 #SBATCH --exclude=gpuc001,gpuc002,memc001	# exclude CCIB GPUs
 #SBATCH --job-name=Pipe_redo 			# job name for listing in queue
 #SBATCH --output=/projectsc/f_geneva_1/caden/mtGenomes/slurmout/slurm-%j-%x.out
-#SBATCH --mem=40G				# memory to allocate in Mb
+#SBATCH --mem=80G				# memory to allocate in Mb
 #SBATCH -n 10 					# number of cores to use
 #SBATCH -N 1 					# number of nodes the cores should be on, 1 means all cores on same node
 #SBATCH --time=10-00:00:00			# maximum run time days-hours:minutes:seconds
@@ -66,7 +66,7 @@ echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### index and align with BWA"
-#bwa index ${genomes}/deca_align/${ref}.fasta
+bwa index ${genomes}/deca_align/${ref}.fasta
 
 bwa mem -t 10 ${genomes}/deca_align/${ref}.fasta \
 ${genomes}/${species}/${species}_filtered.R1.fq.gz \
@@ -89,7 +89,7 @@ echo "map unmapped reads from bwa using stampy"
 /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${genomes}/deca_align/${ref} \
 -h ${genomes}/deca_align/${ref} -t 10 --bamkeepgoodreads \
 -M ${genomes}/${species}/redo/${species}_bwa_aligned-${ref}.bam \
-| samtools sort -@9 -o ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam -
+| samtools sort -@10 -o ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam -
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
@@ -99,11 +99,11 @@ echo "##################### depth and breadth stats on stampy"
 echo ""
 echo "##################### filter and sort mapped reads with samtools"
 echo "samtools code sorting different combos of  mapped reads into new bam file"
-samtools view -b -@ 9 -F 4 -f 8 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map1.bam
+samtools view -b -@10 -F 4 -f 8 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map1.bam
 echo "done 1"
-samtools view -b -@ 9 -F 8 -f 4 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map2.bam
+samtools view -b -@10 -F 8 -f 4 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map2.bam
 echo "done 2"
-samtools view -b -@ 9 -F 12 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map3.bam
+samtools view -b -@10 -F 12 ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}.bam > ${genomes}/${species}/redo/${species}_stampy_aligned-${ref}_map3.bam
 echo "done 3"
 
 echo "samtools merge 3 mappings plus mappings together"
