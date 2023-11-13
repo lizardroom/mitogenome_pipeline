@@ -31,13 +31,16 @@ which is identical except it marks files as being redos
 -> FastQC  
 -> Trimmomatic  
 -> FastQC on trimmed reads  
+  
 -> BWA*  
 -> calculate mapping stats on BWA*#  
 -> Stampy*  
 -> calculate mapping stats on Stampy*#  
+  
 -> filter stampy alignment using samtools*  
 -> calculate stats on filetered reads*  
--> convert bam file to reads 1&2 fastqc files*  
+-> convert bam file to reads 1&2 fastqc files* 
+  
 -> generate NOVOplasty configuration file#  
 -> run NOVOplasty assembly step  
 
