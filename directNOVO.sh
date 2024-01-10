@@ -17,7 +17,7 @@
 echo "load any Amarel modules that script requires"
 module purge					# clears out any pre-existing modules
 module load bedtools2			#for NOVOplasty prep
-module load perl			#needed by both assemblers
+module load perl			#needed by NOVOPlasty
 
 echo ""
 echo "##################### variables"
@@ -41,7 +41,7 @@ gunzip -c ${genomes}/${species}/${species}_filtered.R1.fq.gz > ${genomes}/${spec
 gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
 
 echo "##################### create config file for NOVOplasty"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct"
 
 #echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
