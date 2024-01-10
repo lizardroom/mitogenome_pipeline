@@ -80,7 +80,7 @@ ${genomes}/${species}/${species}_filtered.R2.fq.gz \
 
 echo ""
 echo "##################### depth and breadth stats on BWA"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_sam_depth.sh ${species} "_bwa_aligned-${ref}" ""
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/samtools_depth_stats.sh ${species} "_bwa_aligned-${ref}" ""
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
@@ -99,7 +99,7 @@ echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""
 echo "##################### depth and breadth stats on stampy"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_sam_depth.sh ${species} "_stampy_aligned-${ref}" ""
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/samtools_depth_stats.sh ${species} "_stampy_aligned-${ref}" ""
 
 echo ""
 echo "##################### filter and sort mapped reads with samtools"
