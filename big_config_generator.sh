@@ -14,7 +14,7 @@ Kmer="$8"
 forward="${genomes}/${species}/${5}${4}1.fq"
 reverse="${genomes}/${species}/${5}${4}2.fq"
 output="${genomes}/${species}/${species}-novoplasty/"
-conTemp="/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_configuration_novo.txt"
+conTemp="/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/config_novo_template.txt"
 conNew="${output}novo_config_${species}_${9}_${6}_${8}.txt"
 
 echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
