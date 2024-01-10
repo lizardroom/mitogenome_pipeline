@@ -13,7 +13,7 @@ format=$9
 forward="${genomes}/${species}/${subfolder}${reads}1.fq"
 reverse="${genomes}/${species}/${subfolder}${reads}2.fq"
 output="${genomes}/${species}/${species}-novoplasty/"
-conTemp="/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_configuration_novo.txt"
+conTemp="/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/configuration_novo_template.txt"
 conNew="${output}novo_config_${species}_${format}_${refName}_${Kmer}.txt"
 
 echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
