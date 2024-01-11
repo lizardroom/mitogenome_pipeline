@@ -35,7 +35,7 @@ reads1="$(sed -n '2p' ${fetchDir}/${1}.txt)"
 reads2="$(sed -n '3p' ${fetchDir}/${1}.txt)"
 readlen="$(sed -n '4p' ${fetchDir}/${1}.txt)"
 insert="$(sed -n '5p' ${fetchDir}/${1}.txt)"
-genomes="/projectsc/f_geneva_1/caden/genomes"
+genomes="/projectsc/f_geneva_1/caden/mtGenomes/genomes"
 
 echo ""
 echo "##################### BEGINNING OF $1 #####################"

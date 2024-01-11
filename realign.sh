@@ -23,8 +23,9 @@ module load python/2.7.12		#needed by stampy
 echo ""
 echo "##################### variables"
 species=$1
-ref="-${2}"
+ref=$2
 vers=$3
+
 fetchDir="/projectsc/f_geneva_1/caden/mtGenomes/species-fetch"
 folder="$(sed -n '1p' ${fetchDir}/${1}-remap.txt)"
 reads1="$(sed -n '2p' ${fetchDir}/${1}-remap.txt)"
@@ -41,16 +42,16 @@ mkdir -p ${genomes}/${species}/{fastqc-results,${species}-novoplasty,remap}
 
 echo ""
 echo "##################### index and align with BWA"
-bwa index ${genomes}/deca_align/${species}.fasta
+bwa index ${genomes}/deca_align/${ref}.fasta
 
 echo "mapping..."
-bwa mem -t 10 ${genomes}/deca_align/${species}.fasta \
+bwa mem -t 10 ${genomes}/deca_align/${ref}.fasta \
 ${folder}/${reads1} ${folder}/${reads2} \
-| samtools sort -@10 -o ${genomes}/${species}/remap/${species}_bwa_remap.bam -
+| samtools sort -@10 -o ${genomes}/${species}/remap/${species}${vers}_${ref}_bwa_remap.bam -
 
 echo ""
 echo "##################### depth and breadth stats on BWA"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "_bwa_remap" "/remap"
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_project/univ_sam_depth.sh ${species} "${vers}_${ref}_bwa_remap" "/remap"
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
 echo ""

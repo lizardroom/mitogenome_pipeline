@@ -31,11 +31,12 @@ readlen="$(sed -n '4p' ${fetchDir}/${1}.txt)"
 insert="$(sed -n '5p' ${fetchDir}/${1}.txt)"
 genomes="/projectsc/f_geneva_1/caden/mtGenomes/genomes"
 
-#echo ""
-#echo "##################### BEGINNING OF $1 #####################"
+echo ""
+echo "##################### BEGINNING OF $1 #####################"
 
-#gunzip -c ${genomes}/${species}/${species}_filtered.R1.fq.gz > ${genomes}/${species}/${species}_filtered1.fq
-#gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
+echo "##################### gunzip filtered files"
+gunzip -c ${genomes}/${species}/${species}_filtered.R1.fq.gz > ${genomes}/${species}/${species}_filtered1.fq
+gunzip -c ${genomes}/${species}/${species}_filtered.R2.fq.gz > ${genomes}/${species}/${species}_filtered2.fq
 
 echo "##################### create config file for NOVOplasty"
 /projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/big_config_generator.sh ${species} ${readlen} ${insert} "${species}_filtered" "" "${ref}" "deca_align/${ref}.fasta" ${Kmer} "direct-big" "45"
