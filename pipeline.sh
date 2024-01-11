@@ -67,7 +67,7 @@ ${genomes}/${species}/${species}_filtered.R2.fq.gz \
 
 echo ""
 echo "##################### depth and breadth stats on BWA"
-/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/samtools_depth_stats.sh ${species} "_bwa_aligned-${ref}" ""
+/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/samtools_depth_stats.sh ${species} "_bwa_aligned-${ref}"
 
 
 echo ""
@@ -85,7 +85,7 @@ echo "map unmapped reads from bwa using stampy"
 
 echo ""
 echo "##################### depth and breadth stats on stampy"
-/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/samtools_depth_stats.sh ${species} "_stampy_aligned-${ref}" ""
+/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/samtools_depth_stats.sh ${species} "_stampy_aligned-${ref}"
 
 
 echo ""
@@ -110,7 +110,7 @@ samtools sort -n ${genomes}/${species}/${species}_mapped-${ref}.bam \
 
 echo ""
 echo "##################### depth and breadth stats on filtered reads"
-/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/sam_depth.sh ${species} "_mapped-${ref}" ""
+/projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/sam_depth.sh ${species} "_mapped-${ref}"
 
 
 echo ""
