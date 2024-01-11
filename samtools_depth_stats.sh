@@ -1,10 +1,10 @@
 #!/bin/bash
 
 echo "directory and name variables"
-genomes="/projectsc/f_geneva_1/caden/mtGenomes/genomes"
+genomes="/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/genomes"
 species="$1"
 name="$2"
-folder="/projectsc/f_geneva_1/caden/mtGenomes/genomes/${species}${3}"
+folder="/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/genomes/${species}${3}"
 
 #####################
 echo "index mapping file"
