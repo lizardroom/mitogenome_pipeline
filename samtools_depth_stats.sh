@@ -4,7 +4,7 @@ echo "directory and name variables"
 genomes="/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/genomes"
 species="$1"
 name="$2"
-folder="/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/genomes/${species}${3}"
+folder="/XXXXXXX/YYYYYYYYY/ZZZZZZZ/project/genomes/${species}"
 
 #####################
 echo "index mapping file"
