@@ -128,6 +128,11 @@ fi
 
 if [ $stampy_run -eq 1 ]; then #####################################
 echo ""
+echo "##################### Sort BWA output reads"
+echo "samtools sort reads in name order"
+samtools sort -@10 -n ${genomes}/${species}/${species}_bwa_aligned-${ref}.bam \
+-o ${genomes}/${species}/${species}_bwa_aligned-${ref}_ordered.bam
+
 echo "##################### stampy re-mapping onto BWA output"
 #echo "build genome file (comment out on re-runs)"
 #/projectsc/f_geneva_1/programs/stampy/stampy.py -G ${ref} --inputformat=fasta ${genomes}/deca_align/${ref}.fasta
@@ -137,7 +142,7 @@ echo "##################### stampy re-mapping onto BWA output"
 echo "map unmapped reads from bwa using stampy"
 /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${genomes}/deca_align/${ref} \
 -h ${genomes}/deca_align/${ref} -t 10 --bamkeepgoodreads \
--M ${genomes}/${species}/${species}_bwa_aligned-${ref}.bam \
+-M ${genomes}/${species}/${species}_bwa_aligned-${ref}_ordered.bam \
 | samtools sort -@10 -o ${genomes}/${species}/${species}_stampy_aligned-${ref}.bam -
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
