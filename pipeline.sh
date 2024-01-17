@@ -37,8 +37,38 @@ readlen="$(sed -n '4p' ${fetchDir}/${1}.txt)"
 insert="$(sed -n '5p' ${fetchDir}/${1}.txt)"
 genomes="/projectsc/f_geneva_1/caden/mtGenomes/genomes"
 
+
+echo ""
+echo "##################### sub-program run controls"
+## if you would like for a sub-section of the pipeline to run,
+## set that value to 1. To not have a subsection run, set to 0 (zero). 
+
+#to run FastQC, Trimmomatic, and post-trim FastQC
+fq_trimmo_run=1
+#to run BWA mapping and post-bwa sorting
+bwa_run=1
+#to run Stampy mapping
+stampy_run=1
+#to run samtools filtering of stampy mapped reads
+filter_run=1
+#to run generation of novoplasty configuration file and assembly
+novo_run=1
+
 echo ""
 echo "##################### BEGINNING OF $1 #####################"
+echo "reference used: ${ref}"
+echo "Kmer used for Novoplasty: ${Kmer}"
+echo "Forward reads: ${reads1}"
+echo "Reverse reads: ${reads2}"
+echo "Read length stat: ${readlen}"
+echo "Insert size stat: ${insert}"
+echo ""
+echo "FastQC & Trimmomatic run:       ${trimmo}"
+echo "BWA mapping:                    ${bwa_run}"
+echo "Stampy mapping:                 ${stampy_run}"
+echo "Post-stampy filtering:          ${filter_run}"
+echo "Novoplasty config and assembly: ${novo_run}"
+
 
 echo ""
 echo "##################### create missing directories"
