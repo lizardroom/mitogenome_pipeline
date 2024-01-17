@@ -63,7 +63,7 @@ echo "Reverse reads: ${reads2}"
 echo "Read length stat: ${readlen}"
 echo "Insert size stat: ${insert}"
 echo ""
-echo "FastQC & Trimmomatic run:       ${trimmo}"
+echo "FastQC & Trimmomatic run:       ${fq_trimmo_run}"
 echo "BWA mapping:                    ${bwa_run}"
 echo "Stampy mapping:                 ${stampy_run}"
 echo "Post-stampy filtering:          ${filter_run}"
@@ -74,6 +74,8 @@ echo ""
 echo "##################### create missing directories"
 mkdir -p ${genomes}/${species}/{fastqc-results,${species}-novoplasty} 
 
+
+if [ $fq_trimmo_run -eq 1 ]; then #####################################
 echo ""
 echo "##################### fastqc initial quality analysis"
 fastqc -t 10 ${folder}/${reads1} ${folder}/${reads2} \
@@ -99,6 +101,12 @@ ${genomes}/${species}/${species}_filtered.R2.fq.gz \
 -o ${genomes}/${species}/fastqc-results/
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
+else
+echo "fastqc and trimmomatic skipped"
+fi
+
+
+if [ $bwa_run -eq 1 ]; then #####################################
 echo ""
 echo "##################### index and align with BWA"
 #bwa index ${genomes}/deca_align/${ref}.fasta
@@ -113,6 +121,12 @@ echo "##################### depth and breadth stats on BWA"
 /projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_sam_depth.sh ${species} "_bwa_aligned-${ref}" ""
 echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
+else
+echo "bwa alignment skipped"
+fi
+
+
+if [ $stampy_run -eq 1 ]; then #####################################
 echo ""
 echo "##################### stampy re-mapping onto BWA output"
 #echo "build genome file (comment out on re-runs)"
@@ -131,6 +145,12 @@ echo ""
 echo "##################### depth and breadth stats on stampy"
 /projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/univ_sam_depth.sh ${species} "_stampy_aligned-${ref}" ""
 
+else
+echo "stampy alignment skipped"
+fi
+
+
+if [ $filter_run -eq 1 ]; then #####################################
 echo ""
 echo "##################### filter and sort mapped reads with samtools"
 echo "samtools code sorting different combos of  mapped reads into new bam file"
@@ -155,6 +175,12 @@ echo ""
 echo "##################### depth and breadth stats on filtered reads"
 /projectsc/f_geneva_1/caden/mtGenomes/mitogenome_pipeline/sam_depth.sh ${species} "_mapped-${ref}" ""
 
+else
+echo "filtering of stampy alignment skipped"
+fi
+
+
+if [ $novo_run -eq 1 ]; then #####################################
 echo ""
 echo "##################### any other prep pre-assembly"
 echo "bedtools into fastq r1 and r2 - for NOVOplasty"
@@ -173,6 +199,9 @@ echo "Run novoplasty assemply"
 perl /projectsc/f_geneva_1/programs/novoplasty/NOVOPlasty4.3.1.pl \
 -c ${genomes}/${species}/${species}-novoplasty/novo_config_${species}__${ref}_${Kmer}.txt
 
+else
+echo "novoplasty prep and alignment skipped"
+fi
 
 echo ""
 echo "##################### change user group of files created"
