@@ -7,9 +7,9 @@ K-mer                 =
 Max memory            = 
 Extended log          = 0
 Save assembled reads  = no
-Seed Input            = /projectsc/f_geneva_1/caden/mtGenomes/genomes/
+Seed Input            = 
 Extend seed directly  = no
-Reference sequence    = /projectsc/f_geneva_1/caden/mtGenomes/genomes/
+Reference sequence    = 
 Variance detection    = 
 Chloroplast sequence  = 
 
