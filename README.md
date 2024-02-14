@@ -56,33 +56,33 @@ unix shell). You should see something that looks like the following:
 <summary>Blank Configuration File</summary>
 
   ```
-## Directory and file name pointing to forward illumina reads
+  ## Directory and file name pointing to forward illumina reads
 
-## Directory and file name pointing to reverse illumina reads
+  ## Directory and file name pointing to reverse illumina reads
 
-## Length of reads from illumina run (integer)
+  ## Length of reads from illumina run (integer)
 
-## Insert length from illumina run (integer)
+  ## Insert length from illumina run (integer)
 
-## Directory and file name pointing to the illumina adaptor file for trimmomatic to use
-/projectsc/f_geneva_1/programs/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:4
-## Kmer to be used for novoPlasty assembly
-33
-## Name of the species that will be the reference mt-genome
+  ## Directory and file name pointing to the illumina adaptor file for trimmomatic to use
+  /projectsc/f_geneva_1/programs/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:4
+  ## Kmer to be used for novoPlasty assembly (integer)
+  33
+  ## Name/ID of the species that will be the reference mt-genome
 
-## Name of the reference genome file with file extension
+  ## Name of the reference genome file with file extension
 
-#### If you would like for a sub-section of the pipeline to run, set that value to 1. To not have a subsection run, set to 0 (zero). 
-## to run FastQC, Trimmomatic, and post-trim FastQC
-1
-## to run BWA mapping and post-bwa sorting
-1
-## to run Stampy mapping
-1
-## to run samtools filtering of stampy mapped reads
-1
-## to run generation of novoplasty configuration file and assembly
-1
+  #### If you would like for a sub-section of the pipeline to run, set that value to 1. To not have a subsection run, set to 0 (zero). 
+  ## to run FastQC, Trimmomatic, and post-trim FastQC
+  1
+  ## to run BWA mapping and post-bwa sorting
+  1
+  ## to run Stampy mapping
+  1
+  ## to run samtools filtering of stampy mapped reads
+  1
+  ## to run generation of novoplasty configuration file and assembly
+  1
 ```
 </details>
 
@@ -93,19 +93,83 @@ We will now go over how to fill in the configuration file.
 
 <details>
 <summary>WARNINGS:</summary>
+
+  - First and foremost, it is important to remember that using SPACES 
+  for any of the inputs without special actions taken will cause issues. If you 
+  are just starting out using the unix shell, please ensure that any folder 
+  names or file names are changed so that they do not contain spaces! This also
+  applies to when you are entering parameters into the configuration file. Ensure
+  no spaces are added by accident to the beginning or end of your entry, else errors 
+  may occur when running the pipeline.
   
-- First and foremost, it is important to remember that using SPACES 
-for any of the inputs without special actions taken will cause issues. If you 
-are just starting out using the unix shell, please ensure that any folder 
-names or file names are changed so that they do not contain spaces!
-  
-- Next, it is also important not to tamper with the spacing of each line.
-The pipeline is designed to pull important data and variables from the entry
-lines based on line numbering/spacing, so adding extra lines or deleting them
-will cause the pipeline to not function.
+  - Next, it is also important not to tamper with the spacing of each line.
+  The pipeline is designed to pull important data and variables from the entry
+  lines based on line numbering/spacing, so adding extra lines or deleting them
+  will cause the pipeline to not function.
+
 </details>
 
+The general procedure for filling in the configuration file is that the relevant 
+parameter goes into the blank line below the instructions written starting with \#\#.
 
+Each dropdown below expands inctructions for filling out each respective line in 
+the configuration file:
+
+<details> 
+<summary>## Directory and file name pointing to (forward/reverse) illumina reads</summary>
+  Below each of these lines, write the full file path to either the forward or reverse read 
+  file for the species' whose mitochodrial genome you wish to assemble.
+</details>
+
+<details> 
+<summary>## Length of reads from illumina run (integer)</summary>
+  This is the integer value representing the average read length generated during the 
+  sequencing run. Do not write bp or anything else, just the INTEGER.
+</details>
+
+<details> 
+<summary>## Insert length from illumina run (integer)</summary>
+  This is the integer value representing the average insert length generated during the 
+  sequencing run. Do not write bp or anything else, just the INTEGER.
+</details>
+
+<details> 
+<summary>## Directory and file name pointing to the illumina adaptor file for trimmomatic to use</summary>
+  Write the full file path to the adaptor you wish to use when trimming the reads.
+</details>
+
+<details> 
+<summary>## Kmer to be used for novoPlasty assembly (integer)</summary>
+  Enter the integer value for the Kmer you wish NovoPlasty to use when assembling 
+  the genome. We recommend starting with a value of 33.
+</details>
+
+<details> 
+<summary>## Name/ID of the species that will be the reference mt-genome</summary>
+  Enter a name or ID that allows you to know what reference you used when generating 
+  this assembly. This does not need to be identical to the name of the reference 
+  file (see below), but it should be a NAME ONLY with NO FILE EXTENSION. DO NOT USE SPACES.
+  - Good example: potato_3
+  - Bad examples: potato_3_r445.fasta , potato 3 r445
+</details>
+
+<details> 
+<summary>## Name of the reference genome file with file extension</summary>
+  Enter the FILE NAME of the reference file that will be used for the intended assembly, 
+  INCLUDING FILE EXTENSION. (ie. this is when you would enter potato_3_r445.fasta ). DO 
+  NOT INCLUDE FILE PATH.
+</details>
+
+### Before running the pipeline
+
+Congratulations! You are almost at the point where you can run the pipeline!!
+
+There are two last steps that must happen before you can run it.
+
+First, you must make a few modifications the the pipeline.sh file.
+- Open the pipeline.sh file with a text editor (Using Nano via the Unix shell
+  recommended).
+- 
 
 ### Running the pipeline
 
