@@ -40,10 +40,77 @@ or copy your reference genome (in .fasta format) into the "references" folder.
 ### Filling out the configuration file
 
 Determine the name or ID you will to use for the read data that you will be 
-assembling. This can either be a species name, or some other unique identifier 
-(eg. homo_sapiens)
+assembling. This can either be a species name, or some other unique identifier, 
+as long as there are NO SPACES or special characters outside of dashes and 
+underscores in the name (eg. homo_sapiens , AP-run321). For our example, we 
+will use _yourName_ as a place-holder. Wherever you see _yourName_ , replace 
+it with the ID you have chosen.
+
+Next, you will save a copy of the pipe_config_template.txt file in the 
+"species-fetch" folder. Rename this file to _yourName_.txt
+
+Open this file with a text editor (recommended is using Nano via the 
+unix shell). You should see something that looks like the following:
+
+<details>
+<summary>Blank Configuration File</summary>
+
+  ```
+## Directory and file name pointing to forward illumina reads
+
+## Directory and file name pointing to reverse illumina reads
+
+## Length of reads from illumina run (integer)
+
+## Insert length from illumina run (integer)
+
+## Directory and file name pointing to the illumina adaptor file for trimmomatic to use
+/projectsc/f_geneva_1/programs/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:4
+## Kmer to be used for novoPlasty assembly
+33
+## Name of the species that will be the reference mt-genome
+
+## Name of the reference genome file with file extension
+
+#### If you would like for a sub-section of the pipeline to run, set that value to 1. To not have a subsection run, set to 0 (zero). 
+## to run FastQC, Trimmomatic, and post-trim FastQC
+1
+## to run BWA mapping and post-bwa sorting
+1
+## to run Stampy mapping
+1
+## to run samtools filtering of stampy mapped reads
+1
+## to run generation of novoplasty configuration file and assembly
+1
+```
+</details>
+
+Note that some values may be pre-filled with recommended values for those 
+parameters.
+
+We will now go over how to fill in the configuration file.
+
+<details>
+<summary>WARNINGS:</summary>
+  
+- First and foremost, it is important to remember that using SPACES 
+for any of the inputs without special actions taken will cause issues. If you 
+are just starting out using the unix shell, please ensure that any folder 
+names or file names are changed so that they do not contain spaces!
+  
+- Next, it is also important not to tamper with the spacing of each line.
+The pipeline is designed to pull important data and variables from the entry
+lines based on line numbering/spacing, so adding extra lines or deleting them
+will cause the pipeline to not function.
+</details>
+
+
 
 ### Running the pipeline
+
+
+# Below area is still under construction
 
 ## Program Breakdowns
 
