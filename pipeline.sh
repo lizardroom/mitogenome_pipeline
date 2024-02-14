@@ -3,9 +3,9 @@
 
 #SBATCH --partition=main   			# which partition to run the job, options are in the Amarel guide
 # --exclude=gpuc001,gpuc002		# exclude CCIB GPUs
-#SBATCH --job-name=pipeline 			# job name for listing in queue
+#SBATCH --job-name=pipeline_trop_test 			# job name for listing in queue
 #SBATCH --output=/projectsc/f_geneva_1/caden/mtGenomes/slurmout/slurm-%j-%x.out
-#SBATCH --mem=40G				# memory to allocate in Mb
+#SBATCH --mem=5G				# memory to allocate in Mb (or in Gb is G is added)
 #SBATCH -n 10 					# number of cores to use
 #SBATCH -N 1 					# number of nodes the cores should be on, 1 means all cores on same node
 #SBATCH --time=3-00:00:00			# maximum run time days-hours:minutes:seconds
@@ -15,14 +15,14 @@
 
 
 echo "load any Amarel modules that script requires"
-module purge                # clears out any pre-existing modules
-module load java			      #needed by fastqc, trimmomatic
-module load FastQC		      #fastqc
-#module load samtools	      #in path	#needed by bwa, stampy, bedtools, MITObim, 
-module load bwa				      #bwa
-module load python/2.7.12		#needed by stampy
-module load bedtools2			  #for NOVOplasty prep
-module load perl			      #needed by both assemblers
+module purge                	# clears out any pre-existing modules
+module load java		#needed by fastqc, trimmomatic
+module load FastQC		#fastqc
+#module load samtools	#in path	#needed by bwa, stampy, bedtools, MITObim, 
+module load bwa			#bwa
+module load python/2.7.12	#needed by stampy
+module load bedtools2		#for NOVOplasty prep
+module load perl		#needed by both assemblers
 
 echo ""
 echo "##################### variables"
@@ -48,7 +48,6 @@ readlen="$(sed -n '6p' ${fetchDir}/${species}.txt)"
 insert="$(sed -n '8p' ${fetchDir}/${species}.txt)"
 #Directory for the illumina adaptor file for trimmomatic to use
 illumina_adaptor="$(sed -n '10p' ${fetchDir}/${species}.txt)"
-                  #"/projectsc/f_geneva_1/programs/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:4"
 #Kmer to be used for novoPlasty assembly
 Kmer="$(sed -n '12p' ${fetchDir}/${species}.txt)"
 #Name of the species that will be the reference mt-genome
@@ -101,10 +100,10 @@ if [ $fq_trimmo_run -eq 1 ]; then #####################################
   echo "##################### trimmomatic"
   java -jar /projectsc/f_geneva_1/programs/trimmomatic/trimmomatic-0.39.jar PE \
     -threads 10 -phred33 -trimlog ${project}/assemblies/${species}/${species}_trim.log \
-    ${folder}/${reads1} ${folder}/${reads2} \
+    ${reads1} ${reads2} \
     ${project}/assemblies/${species}/${species}_filtered.R1.fq.gz ${project}/assemblies/${species}/${species}_filtered.unpaired.R1.fq.gz \
     ${project}/assemblies/${species}/${species}_filtered.R2.fq.gz ${project}/assemblies/${species}/${species}_filtered.unpaired.R2.fq.gz \
-    ILLUMINACLIP: ${illumina_adaptor} \
+    ILLUMINACLIP:${illumina_adaptor} \
     LEADING:20 TRAILING:20 SLIDINGWINDOW:13:20 MINLEN:23
 
   echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
