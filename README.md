@@ -37,8 +37,11 @@ Now, you will copy the following files into the "mitogenome\_pipeline" folder:
 A reference mitochondrial genome is required to run the pipeline. Move 
 or copy your reference genome (in .fasta format) into the "references" folder.
 
-### Configuration of pipeline and pre-run steps
+### Filling out the configuration file
 
+Determine the name or ID you will to use for the read data that you will be 
+assembling. This can either be a species name, or some other unique identifier 
+(eg. homo_sapiens)
 
 ### Running the pipeline
 
