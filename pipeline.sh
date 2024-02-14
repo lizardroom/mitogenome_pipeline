@@ -125,7 +125,7 @@ fi
 if [ $bwa_run -eq 1 ]; then #####################################
   echo ""
   echo "##################### index and align with BWA"
-  #bwa index ${project}/references/${ref}.fasta
+  #bwa index ${project}/references/${ref_file}
 
   bwa mem -t 10 ${project}/references/${ref_file} \
     ${project}/assemblies/${species}/${species}_filtered.R1.fq.gz \
@@ -213,10 +213,10 @@ if [ $novo_run -eq 1 ]; then #####################################
   echo "create config file for NOVOplasty"
     output="${project}/assemblies/${species}/${species}-novoplasty/"
     conTemp="${project}/mitogenome_pipeline/novoplasty_template.txt"
-    conNew="${output}novo_config_${species}_${ref}_${Kmer}.txt"
+    conNew="${output}novo_config_${species}_ref-${ref}_${Kmer}.txt"
 
     echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
-    echo "${species}_${ref}_${Kmer}" >> ${conNew}
+    echo "${species}_ref-${ref}_${Kmer}" >> ${conNew}
     echo -n "$(sed -n '4,6p' ${conTemp})" >> ${conNew}
     echo "${Kmer}" >> ${conNew}
     echo -n "$(sed -n '7,10p' ${conTemp})" >> ${conNew}
@@ -241,7 +241,7 @@ if [ $novo_run -eq 1 ]; then #####################################
   echo "##################### assembly step"
   echo "Run novoplasty assemply"
   perl /projectsc/f_geneva_1/programs/novoplasty/NOVOPlasty4.3.1.pl \
-    -c ${project}/assemblies/${species}/${species}-novoplasty/novo_config_${species}_${ref}_${Kmer}.txt
+    -c ${project}/assemblies/${species}/${species}-novoplasty/novo_config_${species}_ref-${ref}_${Kmer}.txt
 
 else
   echo "novoplasty prep and alignment skipped"
