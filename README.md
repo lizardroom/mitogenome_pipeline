@@ -15,6 +15,7 @@
 
 ## Setup
 
+### Preliminary file and folder setup
 The first step necessary to prepare to run the pipeline is to select 
 or create a folder in which the project will be conducted. It is 
 important that the name of the folder does not contain any SPACES! 
@@ -27,11 +28,19 @@ Next, within your project folder, create the following two folders
 - references
 - mitogenome\_pipeline
 
-Now, you will copy the following files into the mitogenome\_pipeline folder:
+Now, you will copy the following files into the "mitogenome\_pipeline" folder:
 - novoplasty_template.txt
 - pipe_config_template.txt
 - pipeline.sh
 - sam_depth.sh
+
+A reference mitochondrial genome is required to run the pipeline. Move 
+or copy your reference genome (in .fasta format) into the "references" folder.
+
+### Configuration of pipeline and pre-run steps
+
+
+### Running the pipeline
 
 ## Program Breakdowns
 
