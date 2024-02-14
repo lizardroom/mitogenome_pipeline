@@ -212,8 +212,30 @@ if [ $novo_run -eq 1 ]; then #####################################
     -fq2 ${project}/assemblies/${species}/${species}_mapped-${ref}_r2.fq
 
   echo "create config file for NOVOplasty"
-  ${project}/mitogenome_pipeline/config_generator.sh ${species} ${readlen} ${insert} "${species}_mapped-${ref}_r" "" "${ref}" "${project}/references/${ref_file}" ${Kmer} ""
+    output="${project}/assemblies/${species}/${species}-novoplasty/"
+    conTemp="${project}/mitogenome_pipeline/univ_configuration_novo.txt"
+    conNew="${output}novo_config_${species}_${ref}_${Kmer}.txt"
 
+    echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
+    echo "${species}_${ref}_${Kmer}" >> ${conNew}
+    echo -n "$(sed -n '4,6p' ${conTemp})" >> ${conNew}
+    echo "${Kmer}" >> ${conNew}
+    echo -n "$(sed -n '7,10p' ${conTemp})" >> ${conNew}
+    echo "${project}/references/${ref_file}" >> ${conNew}
+    echo -n "$(sed -n '11,12p' ${conTemp})" >> ${conNew}
+    echo "${project}/references/${ref_file}" >> ${conNew}
+    echo -n "$(sed -n '13,18p' ${conTemp})" >> ${conNew}
+    echo "${readlen}" >> ${conNew}
+    echo -n "$(sed -n '19p' ${conTemp})" >> ${conNew}
+    echo "${insert}" >> ${conNew}
+    echo -n "$(sed -n '20,23p' ${conTemp})" >> ${conNew}
+    echo "${project}/assemblies/${species}/${species}_mapped-${ref}_r1.fq" >> ${conNew}
+    echo -n "$(sed -n '24p' ${conTemp})" >> ${conNew}
+    echo "${project}/assemblies/${species}/${species}_mapped-${ref}_r2.fq" >> ${conNew}
+    echo -n "$(sed -n '25,37p' ${conTemp})" >> ${conNew}
+    echo "${output}" >> ${conNew}
+
+  
   echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
   echo ""
