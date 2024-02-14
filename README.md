@@ -195,6 +195,8 @@ The second step only applies if you are trying to rerun the pipeline on a data
 sample that previously failed. If this is your first time trying to assemble this 
 unique genome, then you can skip forward to the next section "Running the pipeline"
 
+
+
 ### Running the pipeline
 
 
