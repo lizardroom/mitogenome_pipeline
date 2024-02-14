@@ -37,6 +37,7 @@ Now, you will copy the following files into the "mitogenome\_pipeline" folder:
 A reference mitochondrial genome is required to run the pipeline. Move 
 or copy your reference genome (in .fasta format) into the "references" folder.
 
+
 ### Filling out the configuration file
 
 Determine the name or ID you will to use for the read data that you will be 
@@ -160,6 +161,7 @@ the configuration file:
   NOT INCLUDE FILE PATH.
 </details>
 
+
 ### Before running the pipeline
 
 Congratulations! You are almost at the point where you can run the pipeline!!
@@ -188,7 +190,15 @@ First, you must make a few modifications the the pipeline.sh file:
   Shell, you should consider changing your folder names to remove or replace the
   spaces with characters such as underscores or dashes.
 
+
+The second step only applies if you are trying to rerun the pipeline on a data 
+sample that previously failed. If this is your first time trying to assemble this 
+unique genome, then you can skip forward to the next section "Running the pipeline"
+
 ### Running the pipeline
+
+
+
 
 
 # Below area is still under construction
