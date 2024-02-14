@@ -166,10 +166,27 @@ Congratulations! You are almost at the point where you can run the pipeline!!
 
 There are two last steps that must happen before you can run it.
 
-First, you must make a few modifications the the pipeline.sh file.
+First, you must make a few modifications the the pipeline.sh file:
 - Open the pipeline.sh file with a text editor (Using Nano via the Unix shell
   recommended).
-- 
+- Scroll down to approximately line 31. You should see something like this:
+```
+  #File directory where the project will be run
+  project=""
+```
+- where it says ``project=""`` , delete anything that is between the quotes
+  and then WITHIN THE QUOTES type the directory path to your
+  project folder that you selected or created at the beginning of this
+  series of instructions. Make sure that you DO NOT put a "/" at the end of
+  the directory path!! You should end up with something like this:
+```
+  #File directory where the project will be run
+  project="/home/users/me/genetics_projects/mito-genome-project"
+```
+- REMINDER: If any of your file directory names from above have spaces in them,
+  and you do not know how to deal with spaces in file and directory names in the Unix
+  Shell, you should consider changing your folder names to remove or replace the
+  spaces with characters such as underscores or dashes.
 
 ### Running the pipeline
 
