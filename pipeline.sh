@@ -213,7 +213,7 @@ if [ $novo_run -eq 1 ]; then #####################################
 
   echo "create config file for NOVOplasty"
     output="${project}/assemblies/${species}/${species}-novoplasty/"
-    conTemp="${project}/mitogenome_pipeline/univ_configuration_novo.txt"
+    conTemp="${project}/mitogenome_pipeline/novoplasty_template.txt"
     conNew="${output}novo_config_${species}_${ref}_${Kmer}.txt"
 
     echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
