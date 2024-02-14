@@ -9,7 +9,7 @@
 #SBATCH -n 10 					# number of cores to use
 #SBATCH -N 1 					# number of nodes the cores should be on, 1 means all cores on same node
 #SBATCH --time=3-00:00:00			# maximum run time days-hours:minutes:seconds
-#SBATCH --no-requeue 				# restart and paused or superseeded jobs
+#SBATCH --no-requeue 				# restart and paused or superceeded jobs
 #SBATCH --mail-user=lcc128@rutgers.edu 		# email address to send status updates
 #SBATCH --mail-type=BEGIN,END,FAIL,REQUEUE 	# email for the following reasons
 
@@ -30,44 +30,42 @@ echo "##################### variables"
 
 #File directory where the project will be run
 project="/projectsc/f_geneva_1/caden/mtGenomes"
+
+##################### DO NOT MODIFY CODE BELOW HERE #####################
+#Name of the species from command line submission
+species=$1
+#assigning fetch folder location
 fetchDir="${project}/species-fetch"
 
-#Name of the species.
-species=$1
-#Kmer to be used for novoPlasty assembly
-Kmer=
+
 #Directory and file name pointing to forward illumina reads
-reads1="$(sed -n '2p' ${fetchDir}/${1}.txt)"
-#Directory and file name pointing to forward illumina reads
-reads2="$(sed -n '3p' ${fetchDir}/${1}.txt)"
+reads1="$(sed -n '2p' ${fetchDir}/${species}.txt)"
+#Directory and file name pointing to reverse illumina reads
+reads2="$(sed -n '4p' ${fetchDir}/${species}.txt)"
 #Length of reads from illumina run
-readlen="$(sed -n '4p' ${fetchDir}/${1}.txt)"
+readlen="$(sed -n '6p' ${fetchDir}/${species}.txt)"
 #Insert length stat from illumina run
-insert="$(sed -n '5p' ${fetchDir}/${1}.txt)"
+insert="$(sed -n '8p' ${fetchDir}/${species}.txt)"
 #Directory for the illumina adaptor file for trimmomatic to use
-illumina_adaptor="/projectsc/f_geneva_1/programs/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:4"
-
+illumina_adaptor="$(sed -n '10p' ${fetchDir}/${species}.txt)"
+                  #"/projectsc/f_geneva_1/programs/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:4"
+#Kmer to be used for novoPlasty assembly
+Kmer="$(sed -n '12p' ${fetchDir}/${species}.txt)"
 #Name of the species that will be the reference mt-genome
-ref=
+ref="$(sed -n '14p' ${fetchDir}/${species}.txt)"
 #Name of the reference genome file with file extension
-ref_file=
-
-
-echo ""
-echo "##################### sub-program run controls"
-## if you would like for a sub-section of the pipeline to run,
-## set that value to 1. To not have a subsection run, set to 0 (zero). 
-
+ref_file="$(sed -n '16p' ${fetchDir}/${species}.txt)"
+## if you would like for a sub-section of the pipeline to run, set that value to 1. To not have a subsection run, set to 0 (zero). 
 #to run FastQC, Trimmomatic, and post-trim FastQC
-fq_trimmo_run=1
+fq_trimmo_run="$(sed -n '19p' ${fetchDir}/${species}.txt)"
 #to run BWA mapping and post-bwa sorting
-bwa_run=1
+bwa_run="$(sed -n '21p' ${fetchDir}/${species}.txt)"
 #to run Stampy mapping
-stampy_run=1
+stampy_run="$(sed -n '23p' ${fetchDir}/${species}.txt)"
 #to run samtools filtering of stampy mapped reads
-filter_run=1
+filter_run="$(sed -n '25p' ${fetchDir}/${species}.txt)"
 #to run generation of novoplasty configuration file and assembly
-novo_run=1
+novo_run="$(sed -n '27p' ${fetchDir}/${species}.txt)"
 
 echo ""
 echo "##################### BEGINNING OF $1 #####################"
@@ -78,6 +76,7 @@ echo "Reverse reads: ${reads2}"
 echo "Read length stat: ${readlen}"
 echo "Insert size stat: ${insert}"
 echo ""
+echo "##################### sub-program run controls"
 echo "FastQC & Trimmomatic run:       ${fq_trimmo_run}"
 echo "BWA mapping:                    ${bwa_run}"
 echo "Stampy mapping:                 ${stampy_run}"
