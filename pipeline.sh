@@ -242,7 +242,7 @@ if [ $novo_run -eq 1 ]; then #####################################
   echo "##################### assembly step"
   echo "Run novoplasty assemply"
   perl /projectsc/f_geneva_1/programs/novoplasty/NOVOPlasty4.3.1.pl \
-    -c ${project}/assemblies/${species}/${species}-novoplasty/novo_config_${species}__${ref}_${Kmer}.txt
+    -c ${project}/assemblies/${species}/${species}-novoplasty/novo_config_${species}_${ref}_${Kmer}.txt
 
 else
   echo "novoplasty prep and alignment skipped"
