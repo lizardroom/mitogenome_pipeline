@@ -15,14 +15,14 @@
 
 
 echo "load any Amarel modules that script requires"
-module purge					# clears out any pre-existing modules
-module load java			#needed by fastqc, trimmomatic
-module load FastQC			#fastqc
-#module load samtools	#in path	#needed by bwa, stampy, bedtools, MITObim, 
-module load bwa				#bwa
+module purge                # clears out any pre-existing modules
+module load java			      #needed by fastqc, trimmomatic
+module load FastQC		      #fastqc
+#module load samtools	      #in path	#needed by bwa, stampy, bedtools, MITObim, 
+module load bwa				      #bwa
 module load python/2.7.12		#needed by stampy
-module load bedtools2			#for NOVOplasty prep
-module load perl			#needed by both assemblers
+module load bedtools2			  #for NOVOplasty prep
+module load perl			      #needed by both assemblers
 
 echo ""
 echo "##################### variables"
