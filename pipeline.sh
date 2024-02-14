@@ -135,7 +135,7 @@ if [ $bwa_run -eq 1 ]; then #####################################
 
   echo ""
   echo "##################### depth and breadth stats on BWA"
-  ${project}/mitogenome_pipeline/sam_depth.sh ${species} "_bwa_aligned-${ref}" ""
+  ${project}/mitogenome_pipeline/sam_depth.sh "${project}/assemblies" ${species} "_bwa_aligned-${ref}"
 
   echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
 
@@ -166,7 +166,7 @@ if [ $stampy_run -eq 1 ]; then #####################################
 
   echo ""
   echo "##################### depth and breadth stats on stampy"
-  ${project}/mitogenome_pipeline/sam_depth.sh ${species} "_stampy_aligned-${ref}" ""
+  ${project}/mitogenome_pipeline/sam_depth.sh "${project}/assemblies" ${species} "_stampy_aligned-${ref}"
 
 else
   echo "stampy alignment skipped"
@@ -196,7 +196,7 @@ if [ $filter_run -eq 1 ]; then #####################################
 
   echo ""
   echo "##################### depth and breadth stats on filtered reads"
-  ${project}/mitogenome_pipeline/sam_depth.sh ${species} "_mapped-${ref}" ""
+  ${project}/mitogenome_pipeline/sam_depth.sh "${project}/assemblies" ${species} "_mapped-${ref}"
 
 else
   echo "filtering of stampy alignment skipped"
