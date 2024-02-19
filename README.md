@@ -195,13 +195,30 @@ The second step only applies if you are trying to rerun the pipeline on a data
 sample that previously failed. If this is your first time trying to assemble this 
 unique genome, then you can skip forward to the next section "Running the pipeline"
 
-
+If the pipeline fails at an intermediate step, the steps after that one will still 
+generate files, but they will be empty. So, any time after a run of the pipeline is 
+complete, you must check the output log file to see how the run proceeded and if 
+any errors occurred. After the site of an error is identified, all failed output 
+files should be deleted before a rerun. Additionally, the user should determine whether 
+they wish to run the pipeline from the beginning (in which case all output files should 
+be deleted), or if they wish to rerun it from the last successful step. If the latter is 
+desired, the user should edit the last part of the configuration file such that only 
+the relevant subsections of the pipeline run.
 
 ### Running the pipeline
 
+To run the pipeline is relatively straightforward. For each of the instructions below, 
+where it says _yourName_ you should type the Name or ID that you chose during the 
+"Filling out The Configuration File" instructions above.
 
-
-
+- If running on the unix shell terminal locally, the pipeline can be run using
+```
+$  source pipeline.sh "yourName"
+```
+- If running on a computing system that utilizes slurm, then use
+```
+$  sbatch pipeline.sh "yourName"
+```
 
 # Below area is still under construction
 
