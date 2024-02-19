@@ -220,6 +220,13 @@ $  source pipeline.sh "yourName"
 $  sbatch pipeline.sh "yourName"
 ```
 
+
+
+
+
+
+
+
 # Below area is still under construction
 
 ## Program Breakdowns
