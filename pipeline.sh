@@ -132,7 +132,8 @@ if [ $bwa_run -eq 1 ]; then #####################################
   else
     echo "indexing output detected, indexing skipped"
   fi
-
+  echo ""
+  
   bwa mem -t 10 ${project}/references/${ref_file} \
     ${project}/assemblies/${species}/${species}_filtered.R1.fq.gz \
     ${project}/assemblies/${species}/${species}_filtered.R2.fq.gz \
@@ -167,6 +168,7 @@ if [ $stampy_run -eq 1 ]; then #####################################
   else
     echo "stampy reference file building output detected, step skipped"
   fi
+  echo ""
 
   echo "map unmapped reads from bwa using stampy"
   /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} \
