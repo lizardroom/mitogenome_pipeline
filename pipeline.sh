@@ -124,8 +124,12 @@ fi
 
 if [ $bwa_run -eq 1 ]; then #####################################
   echo ""
-  echo "##################### index and align with BWA"
-  bwa index ${project}/references/${ref_file}
+  echo "##################### index reference file and align with BWA"
+
+  # if one of the indexed files does not exist, then index the reference file
+  if ! test -f "${project}/references/${ref_file}.amb"; then
+    bwa index ${project}/references/${ref_file}
+  fi
 
   bwa mem -t 10 ${project}/references/${ref_file} \
     ${project}/assemblies/${species}/${species}_filtered.R1.fq.gz \
@@ -152,10 +156,14 @@ if [ $stampy_run -eq 1 ]; then #####################################
     -o ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}_ordered.bam
 
   echo "##################### stampy re-mapping onto BWA output"
-  echo "build genome file (comment out on re-runs)"
-  /projectsc/f_geneva_1/programs/stampy/stampy.py -G ${project}/references/${ref} --inputformat=fasta ${project}/references/${ref_file}
-  echo "build hash table (comment out on re-runs)"
-  /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} -H ${project}/references/${ref}
+
+  # if one of the built genome files does not exist, then run building
+  if ! test -f "${project}/references/${ref}.sthash"; then
+    echo "build genome file (comment out on re-runs)"
+    /projectsc/f_geneva_1/programs/stampy/stampy.py -G ${project}/references/${ref} --inputformat=fasta ${project}/references/${ref_file}
+    echo "build hash table (comment out on re-runs)"
+    /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} -H ${project}/references/${ref}
+  fi
 
   echo "map unmapped reads from bwa using stampy"
   /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} \
