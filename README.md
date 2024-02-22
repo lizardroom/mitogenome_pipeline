@@ -1,7 +1,7 @@
 # Mitogenome Pipeline
 
 
-## Dependencies
+## 1. Dependencies
 
 - SRA toolkit (optional)
 - Python
@@ -14,9 +14,9 @@
 - Bedtools2 ([documentation](https://bedtools.readthedocs.io/en/latest/index.html))
 - NOVOplasty ([documentation](https://github.com/ndierckx/NOVOPlasty))
 
-## Setup
+## 2. Setup
 
-### Preliminary file and folder setup
+### 2.1 Preliminary file and folder setup
 The first step necessary to prepare to run the pipeline is to select 
 or create a folder in which the project will be conducted. It is 
 important that the name of the folder does not contain any SPACES! 
@@ -36,10 +36,10 @@ Now, you will copy the following files into the "mitogenome\_pipeline" folder:
 - sam_depth.sh
 
 A reference mitochondrial genome is required to run the pipeline. Move 
-or copy your reference genome (in .fasta format) into the "references" folder.
+or copy your reference genome (in .fasta format) into the "references" folder.  
+<br>
 
-
-### Filling out the configuration file
+### 2.2 Filling out the configuration file
 
 Determine the name or ID you will to use for the read data that you will be 
 assembling. This can either be a species name, or some other unique identifier, 
@@ -161,9 +161,9 @@ the configuration file:
   INCLUDING FILE EXTENSION. (ie. this is when you would enter potato_3_r445.fasta ). DO 
   NOT INCLUDE FILE PATH.
 </details>
+<br>
 
-
-### Before running the pipeline
+### 2.3 Before running the pipeline
 
 Congratulations! You are almost at the point where you can run the pipeline!!
 
@@ -190,7 +190,7 @@ First, you must make a few modifications the the pipeline.sh file:
   and you do not know how to deal with spaces in file and directory names in the Unix
   Shell, you should consider changing your folder names to remove or replace the
   spaces with characters such as underscores or dashes.
-
+<br>
 
 The second step only applies if you are trying to rerun the pipeline on a data 
 sample that previously failed. If this is your first time trying to assemble this 
@@ -204,9 +204,10 @@ files should be deleted before a rerun. Additionally, the user should determine 
 they wish to run the pipeline from the beginning (in which case all output files should 
 be deleted), or if they wish to rerun it from the last successful step. If the latter is 
 desired, the user should edit the last part of the configuration file such that only 
-the relevant subsections of the pipeline run.
+the relevant subsections of the pipeline run.  
+<br>
 
-### Running the pipeline
+## 3. Running the pipeline
 
 To run the pipeline is relatively straightforward. For each of the instructions below, 
 where it says _yourName_ you should type the Name or ID that you chose during the 
@@ -221,9 +222,9 @@ $  source pipeline.sh "yourName"
 $  sbatch pipeline.sh "yourName"
 ```
 
-
-
-
+<br>
+<br>
+<br>
 
 
 
