@@ -129,13 +129,15 @@ if [ $bwa_run -eq 1 ]; then #####################################
   # if one of the indexed files does not exist, then index the reference file
   if ! test -f "${project}/references/${ref_file}.amb"; then
     bwa index ${project}/references/${ref_file}
+  else
+    echo "indexing output detected, indexing skipped"
   fi
 
   bwa mem -t 10 ${project}/references/${ref_file} \
     ${project}/assemblies/${species}/${species}_filtered.R1.fq.gz \
     ${project}/assemblies/${species}/${species}_filtered.R2.fq.gz \
-    | samtools sort -@10 -o ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}.bam - \
-    1> ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}_run-stdout.txt
+    1> ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}_run-stdout.txt \
+    | samtools sort -@10 -o ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}.bam -
 
   echo ""
   echo "##################### depth and breadth stats on BWA"
@@ -163,6 +165,8 @@ if [ $stampy_run -eq 1 ]; then #####################################
     /projectsc/f_geneva_1/programs/stampy/stampy.py -G ${project}/references/${ref} --inputformat=fasta ${project}/references/${ref_file}
     echo "build hash table (comment out on re-runs)"
     /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} -H ${project}/references/${ref}
+  else
+    echo "stampy reference file building output detected, step skipped"
   fi
 
   echo "map unmapped reads from bwa using stampy"
