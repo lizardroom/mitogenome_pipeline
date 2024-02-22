@@ -125,7 +125,7 @@ fi
 if [ $bwa_run -eq 1 ]; then #####################################
   echo ""
   echo "##################### index and align with BWA"
-  #bwa index ${project}/references/${ref_file}
+  bwa index ${project}/references/${ref_file}
 
   bwa mem -t 10 ${project}/references/${ref_file} \
     ${project}/assemblies/${species}/${species}_filtered.R1.fq.gz \
@@ -152,10 +152,10 @@ if [ $stampy_run -eq 1 ]; then #####################################
     -o ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}_ordered.bam
 
   echo "##################### stampy re-mapping onto BWA output"
-  #echo "build genome file (comment out on re-runs)"
-  #/projectsc/f_geneva_1/programs/stampy/stampy.py -G ${project}/references/${ref} --inputformat=fasta ${project}/references/${ref_file}
-  #echo "build hash table (comment out on re-runs)"
-  #/projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} -H ${project}/references/${ref}
+  echo "build genome file (comment out on re-runs)"
+  /projectsc/f_geneva_1/programs/stampy/stampy.py -G ${project}/references/${ref} --inputformat=fasta ${project}/references/${ref_file}
+  echo "build hash table (comment out on re-runs)"
+  /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} -H ${project}/references/${ref}
 
   echo "map unmapped reads from bwa using stampy"
   /projectsc/f_geneva_1/programs/stampy/stampy.py -g ${project}/references/${ref} \
