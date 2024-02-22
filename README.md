@@ -6,12 +6,12 @@
 - SRA toolkit (optional)
 - Python
 - perl
-- FastQC
-- Trimmomatic
-- Samtools
-- BWA
-- Stampy
-- NOVOplasty
+- FastQC ([documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
+- Trimmomatic ([documentation](http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/TrimmomaticManual_V0.32.pdf))
+- Samtools ([documentation](https://www.htslib.org/doc/samtools.html))
+- BWA ([documentation](https://bio-bwa.sourceforge.net/bwa.shtml))
+- Stampy ([documentation](https://www.rdm.ox.ac.uk/files/research/lunter-group/stampyreadme.txt))
+- NOVOplasty ([documentation](https://github.com/ndierckx/NOVOPlasty))
 
 ## Setup
 
