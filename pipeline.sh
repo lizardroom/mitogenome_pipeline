@@ -130,7 +130,8 @@ if [ $bwa_run -eq 1 ]; then #####################################
   bwa mem -t 10 ${project}/references/${ref_file} \
     ${project}/assemblies/${species}/${species}_filtered.R1.fq.gz \
     ${project}/assemblies/${species}/${species}_filtered.R2.fq.gz \
-    | samtools sort -@10 -o ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}.bam -
+    | samtools sort -@10 -o ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}.bam - \
+    1> ${project}/assemblies/${species}/${species}_bwa_aligned-${ref}_run-stdout.txt
 
   echo ""
   echo "##################### depth and breadth stats on BWA"
