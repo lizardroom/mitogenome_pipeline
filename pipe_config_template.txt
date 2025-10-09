@@ -25,3 +25,5 @@
 1
 ## to run generation of novoplasty configuration file and assembly
 1
+## to run novoplasty step directly from trimmomatic output
+0
