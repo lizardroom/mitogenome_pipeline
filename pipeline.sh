@@ -304,7 +304,7 @@ if [ $direct_run -eq 1 ]; then #####################################
     -c ${project}/assemblies/${species}/${species}-novoplasty/novo_config_${species}_direct-ref-${ref}_${Kmer}.txt
 
 else
-  echo "novoplasty prep and alignment skipped"
+  echo "novoplasty direct from trimmomatic skipped"
 fi
 
 echo ""
