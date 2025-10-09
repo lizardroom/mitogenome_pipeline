@@ -1,11 +1,12 @@
 #!/bin/bash
 
 
-#SBATCH --partition=main   			# which partition to run the job, options are in the Amarel guide
+#SBATCH --partition=cmain   			# which partition to run the job, options are in the Amarel guide
 # --exclude=gpuc001,gpuc002		# exclude CCIB GPUs
+#SBATCH --constraint=oarc
 #SBATCH --job-name=pipeline_trop_test 			# job name for listing in queue
 #SBATCH --output=/projectsc/f_geneva_1/caden/mtGenomes/slurmout/slurm-%j-%x.out
-#SBATCH --mem=5G				# memory to allocate in Mb (or in Gb is G is added)
+#SBATCH --mem=180G				# memory to allocate in Mb (or in Gb is G is added)
 #SBATCH -n 10 					# number of cores to use
 #SBATCH -N 1 					# number of nodes the cores should be on, 1 means all cores on same node
 #SBATCH --time=3-00:00:00			# maximum run time days-hours:minutes:seconds
@@ -65,6 +66,8 @@ stampy_run="$(sed -n '23p' ${fetchDir}/${species}.txt)"
 filter_run="$(sed -n '25p' ${fetchDir}/${species}.txt)"
 #to run generation of novoplasty configuration file and assembly
 novo_run="$(sed -n '27p' ${fetchDir}/${species}.txt)"
+#to run the direct-from trimmomatic-to-novoplasty version of the pipeline
+direct_run="$(sed -n '29p' ${fetchDir}/${species}.txt)"
 
 echo ""
 echo "##################### BEGINNING OF $1 #####################"
@@ -81,6 +84,8 @@ echo "BWA mapping:                    ${bwa_run}"
 echo "Stampy mapping:                 ${stampy_run}"
 echo "Post-stampy filtering:          ${filter_run}"
 echo "Novoplasty config and assembly: ${novo_run}"
+echo "Direct run: ${direct_run}"
+
 
 
 echo ""
@@ -256,6 +261,47 @@ if [ $novo_run -eq 1 ]; then #####################################
   echo "Run novoplasty assemply"
   perl /projectsc/f_geneva_1/programs/novoplasty/NOVOPlasty4.3.1.pl \
     -c ${project}/assemblies/${species}/${species}-novoplasty/novo_config_${species}_ref-${ref}_${Kmer}.txt
+
+else
+  echo "novoplasty prep and alignment skipped"
+fi
+
+if [ $direct_run -eq 1 ]; then #####################################
+  echo ""
+  echo "##################### running novoplasty based on trimmed reads without mapping"
+
+  echo "create config file for NOVOplasty"
+    output="${project}/assemblies/${species}/${species}-novoplasty/"
+    conTemp="${project}/mitogenome_pipeline/novoplasty_template.txt"
+    conNew="${output}novo_config_${species}_direct-ref-${ref}_${Kmer}.txt"
+
+    echo -n "$(sed -n '1,3p' ${conTemp})" > ${conNew}
+    echo "${species}_ref-${ref}_${Kmer}" >> ${conNew}
+    echo -n "$(sed -n '4,6p' ${conTemp})" >> ${conNew}
+    echo "${Kmer}" >> ${conNew}
+    echo -n "$(sed -n '7,10p' ${conTemp})" >> ${conNew}
+    echo "${project}/references/${ref_file}" >> ${conNew}
+    echo -n "$(sed -n '11,12p' ${conTemp})" >> ${conNew}
+    echo "${project}/references/${ref_file}" >> ${conNew}
+    echo -n "$(sed -n '13,18p' ${conTemp})" >> ${conNew}
+    echo "${readlen}" >> ${conNew}
+    echo -n "$(sed -n '19p' ${conTemp})" >> ${conNew}
+    echo "${insert}" >> ${conNew}
+    echo -n "$(sed -n '20,23p' ${conTemp})" >> ${conNew}
+    echo "${project}/assemblies/${species}/${species}_filtered.R1.fq.gz" >> ${conNew}
+    echo -n "$(sed -n '24p' ${conTemp})" >> ${conNew}
+    echo "${project}/assemblies/${species}/${species}_filtered.R2.fq.gz" >> ${conNew}
+    echo -n "$(sed -n '25,37p' ${conTemp})" >> ${conNew}
+    echo "${output}" >> ${conNew}
+
+  
+  echo "$(sacct -j ${SLURM_JOB_ID} --format=elapsed | sed -n -e 3p)"
+
+  echo ""
+  echo "##################### assembly step"
+  echo "Run novoplasty assemply"
+  perl /projectsc/f_geneva_1/programs/novoplasty/NOVOPlasty4.3.1.pl \
+    -c ${project}/assemblies/${species}/${species}-novoplasty/novo_config_${species}_direct-ref-${ref}_${Kmer}.txt
 
 else
   echo "novoplasty prep and alignment skipped"
