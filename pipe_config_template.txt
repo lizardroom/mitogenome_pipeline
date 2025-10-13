@@ -27,3 +27,5 @@
 1
 ## to run novoplasty step directly from trimmomatic output
 0
+## if running novoplasty directly, specify memory limit (GB) below
+0

@@ -4,9 +4,9 @@
 #SBATCH --partition=cmain   			# which partition to run the job, options are in the Amarel guide
 # --exclude=gpuc001,gpuc002		# exclude CCIB GPUs
 #SBATCH --constraint=oarc
-#SBATCH --job-name=pipeline_trop_test 			# job name for listing in queue
+#SBATCH --job-name=pipeline_grahami_direct 			# job name for listing in queue
 #SBATCH --output=/projectsc/f_geneva_1/caden/mtGenomes/slurmout/slurm-%j-%x.out
-#SBATCH --mem=180G				# memory to allocate in Mb (or in Gb is G is added)
+#SBATCH --mem=60G				# memory to allocate in Mb (or in Gb is G is added)
 #SBATCH -n 10 					# number of cores to use
 #SBATCH -N 1 					# number of nodes the cores should be on, 1 means all cores on same node
 #SBATCH --time=3-00:00:00			# maximum run time days-hours:minutes:seconds
@@ -68,6 +68,9 @@ filter_run="$(sed -n '25p' ${fetchDir}/${species}.txt)"
 novo_run="$(sed -n '27p' ${fetchDir}/${species}.txt)"
 #to run the direct-from trimmomatic-to-novoplasty version of the pipeline
 direct_run="$(sed -n '29p' ${fetchDir}/${species}.txt)"
+#memory limit for when novoplasty is run directly from trimmomatic
+novo_memory="$(sed -n '31p' ${fetchDir}/${species}.txt)"
+
 
 echo ""
 echo "##################### BEGINNING OF $1 #####################"
@@ -279,7 +282,11 @@ if [ $direct_run -eq 1 ]; then #####################################
     echo "${species}_ref-${ref}_${Kmer}" >> ${conNew}
     echo -n "$(sed -n '4,6p' ${conTemp})" >> ${conNew}
     echo "${Kmer}" >> ${conNew}
-    echo -n "$(sed -n '7,10p' ${conTemp})" >> ${conNew}
+    echo -n "$(sed -n '7p' ${conTemp})" >> ${conNew}
+    echo "${novo_memory}" >> ${conNew}
+    echo "$(sed -n '8p' ${conTemp})" >> ${conNew}
+    echo "Save assembled reads  = yes" >> ${conNew}
+    echo -n "$(sed -n '10p' ${conTemp})" >> ${conNew}
     echo "${project}/references/${ref_file}" >> ${conNew}
     echo -n "$(sed -n '11,12p' ${conTemp})" >> ${conNew}
     echo "${project}/references/${ref_file}" >> ${conNew}
