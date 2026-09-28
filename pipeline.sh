@@ -4,9 +4,9 @@
 #SBATCH --partition=cmain   			# which partition to run the job, options are in the Amarel guide
 # --exclude=gpuc001,gpuc002		# exclude CCIB GPUs
 #SBATCH --constraint=oarc
-#SBATCH --job-name=pipeline_grahami_direct 			# job name for listing in queue
+#SBATCH --job-name=pipeline_grahami_full 			# job name for listing in queue
 #SBATCH --output=/projectsc/f_geneva_1/caden/mtGenomes/slurmout/slurm-%j-%x.out
-#SBATCH --mem=60G				# memory to allocate in Mb (or in Gb is G is added)
+#SBATCH --mem=80G				# memory to allocate in Mb (or in Gb is G is added)
 #SBATCH -n 10 					# number of cores to use
 #SBATCH -N 1 					# number of nodes the cores should be on, 1 means all cores on same node
 #SBATCH --time=3-00:00:00			# maximum run time days-hours:minutes:seconds
