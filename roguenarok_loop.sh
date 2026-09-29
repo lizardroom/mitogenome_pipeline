@@ -20,7 +20,7 @@ printf "original\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguen
 for (( samp_line = 1; samp_line <= $line_count; samp_line++))  #loop through lines in sample ID file. $line_count
 do
 	# pull the species name from the selected line
-	species=$(sed -n "${samp_line}p" ${sample_file})
+	species="$(sed -n "${samp_line}p" ${sample_file})"
 	echo "${species}"
  
 	echo "${species}" > /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/${species}.txt
