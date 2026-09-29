@@ -33,12 +33,12 @@ printf "original\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguen
 
 	#run rogueNaRok analysis on new tree with species that was cut
 	/projectsc/f_geneva_1/caden/apps/RogueNaRok/RogueNaRok \
-		-i /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RnR_prunedBootstraps.reduce_${species} \
+		-i /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RnR-prune_prunedBootstraps.reduce_${species} \
 		-n post_${species}
 
 	rogue_stat="/projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RogueNaRok_droppedRogues.post_${species}"
 
 	new_stat=$(echo "$(sed -n '2p' ${rogue_stat})" | awk '{print $5}')
-	printf "${species}\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RogueNaRok_stats
+	printf "${species}\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RogueNaRok_stats.txt
 
 #done
