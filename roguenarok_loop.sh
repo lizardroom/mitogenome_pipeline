@@ -23,11 +23,11 @@ do
 	/projectsc/f_geneva_1/caden/apps/RogueNaRok/rnr-prune \
 		-i /projectsc/f_geneva_1/caden/mtGenomes/mrB/conc_nuc/conc_nuc_0.5burn.nwk \
 		-x /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/${species}.txt \
-		-n conc_nuc_0.5burn_reduce_${species}
+		-n reduce_${species}
 
 	#run rogueNaRok analysis on new tree with species that was cut
 	/projectsc/f_geneva_1/caden/apps/RogueNaRok/RogueNaRok \
-		-i /projectsc/f_geneva_1/caden/mtGenomes/mrB/conc_nuc/conc_nuc_0.5burn_original. \
-		-n conc_nuc_0.5burn_original
+		-i /projectsc/f_geneva_1/caden/mtGenomes/mrB/conc_nuc/RnR_prunedBootstraps.reduce_${species} \
+		-n post_${species}
 
 done
