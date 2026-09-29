@@ -14,13 +14,13 @@ cd /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub
 
 rogue_stat="/projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RogueNaRok_droppedRogues.original"
 new_stat=$(echo "$(sed -n '2p' ${rogue_stat})" | awk '{print $5}')
-printf "original\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RogueNaRok_stats
+printf "original\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RogueNaRok_stats.txt
 
 #loop through list of species names 
-#for (( samp_line = 1; samp_line <= $line_count; samp_line++))  #loop through lines in sample ID file. $line_count
-#do
+for (( samp_line = 1; samp_line <= $line_count; samp_line++))  #loop through lines in sample ID file. $line_count
+do
 	# pull the species name from the selected line
-	species="cybotes" #$(sed -n "${samp_line}p" ${sample_file})
+	species=$(sed -n "${samp_line}p" ${sample_file})
 	echo "${species}"
  
 	echo "${species}" > /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/${species}.txt
@@ -41,4 +41,4 @@ printf "original\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguen
 	new_stat=$(echo "$(sed -n '2p' ${rogue_stat})" | awk '{print $5}')
 	printf "${species}\t${new_stat}\n" >> /projectsc/f_geneva_1/caden/mtGenomes/roguenarok_pub/RogueNaRok_stats.txt
 
-#done
+done
